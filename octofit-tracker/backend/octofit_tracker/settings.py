@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-z4@l77swft$_xl-dzat$_qc(*ji0wcw0-7@l!4+qi47&x&%z!g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
+import os
+# Support Codespace URL and localhost
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if CODESPACE_NAME:
+    ALLOWED_HOSTS.append(f'{CODESPACE_NAME}-8000.app.github.dev')
 
 
 # Application definition
@@ -42,6 +48,8 @@ INSTALLED_APPS = [
     'djongo',
     'corsheaders',
 ]
+
+AUTH_USER_MODEL = 'octofit_tracker.User'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
